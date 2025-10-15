@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
+import { getWeatherForCity } from "./services/weatherService.js";
 
 export function createApp() {
   const app = express();
@@ -18,19 +19,21 @@ export function createApp() {
   });
 
   // Weather endpoint
-  app.get("/weather", (req, res) => {
+  app.get("/weather", async (req, res) => {
     const { city } = req.query;
     if (!city)
       return res
         .status(400)
         .json({ error: "City must be provided, e.g. /weather?city=Boston" });
 
-    res.json({
-      city,
-      tempC: 22,
-      conditions: "Partly Cloudy",
-      source: "hardcoded",
-    });
+    try {
+      const weather = await getWeatherForCity(city);
+      res.json(weather);
+    } catch (err) {
+      res
+        .status(500)
+        .json({ error: err.message || "Failed to fetch weather data" });
+    }
   });
 
   return app;

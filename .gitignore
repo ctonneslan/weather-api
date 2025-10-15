@@ -1,0 +1,19 @@
+# Node
+node_modules
+npm-debug.log
+.env
+.env.local
+
+# Docker
+*.pid
+*.tar
+*.log
+.docker
+
+# IDEs
+.vscode
+.idea
+.DS_Store
+
+# Coverage / testing
+coverage
