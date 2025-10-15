@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      target: dev
+    container_name: weather-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - VISUAL_CROSSING_API_KEY=${VISUAL_CROSSING_API_KEY}
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./src:/usr/src/app/src
+    depends_on:
+      - redis
+    command: npm run dev
+  
+  redis:
+    image: redis:7-alpine
+    container_name: weather-redis
+    ports:
+      - "6379:6379"
