@@ -9,11 +9,11 @@ router.get("/health", (_req, res) => {
 
 router.get("/weather", async (req, res) => {
   const { city } = req.query;
-  if (!city)
-    return res
-      .status(400)
-      .json({ error: "City must be provided, e.g. /weather?city=Boston" });
-
+  if (!city) {
+    const err = new Error("City parameter is required");
+    err.status(400);
+    throw err;
+  }
   try {
     const weather = await getWeatherForCity(city);
     res.json(weather);
