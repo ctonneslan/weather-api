@@ -7,7 +7,7 @@ const BASE_URL =
 
 export async function getWeatherForCity(city) {
   const cacheKey = `weather:${city.toLowerCase()}`;
-  const { API_KEY } = config;
+  const { weatherApiKey } = config;
 
   // Try Redis cache first
   const cached = await redis.get(cacheKey);
@@ -20,7 +20,7 @@ export async function getWeatherForCity(city) {
   try {
     const url = `${BASE_URL}/${encodeURIComponent(
       city
-    )}?unitGroup=metric&key=${API_KEY}&contentType=json`;
+    )}?unitGroup=metric&key=${weatherApiKey}&contentType=json`;
 
     const { data } = await axios.get(url);
 
