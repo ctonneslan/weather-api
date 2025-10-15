@@ -1,12 +1,13 @@
 import axios from "axios";
 import redis from "../cache/redisClient.js";
+import { config } from "../config/index.js";
 
 const BASE_URL =
   "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
 
 export async function getWeatherForCity(city) {
   const cacheKey = `weather:${city.toLowerCase()}`;
-  const API_KEY = process.env.VISUAL_CROSSING_API_KEY; // 👈 moved inside
+  const { API_KEY } = config;
 
   // Try Redis cache first
   const cached = await redis.get(cacheKey);

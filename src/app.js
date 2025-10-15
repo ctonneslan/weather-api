@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
 import weatherRouter from "./routes/weather.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 export function createApp() {
   const app = express();
@@ -15,6 +16,8 @@ export function createApp() {
 
   // Mount router
   app.use("/", weatherRouter);
+
+  app.use(errorHandler);
 
   return app;
 }
