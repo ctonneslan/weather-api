@@ -8,25 +8,42 @@
   </head>
   <body>
     <main>
-      <h1>☀️ Simple Weather App</h1>
+      <h1>☀️ Weather App</h1>
       <form id="weather-form">
         <input
           type="text"
           id="city-input"
-          placeholder="Enter city (e.g. Boston)"
+          placeholder="Enter city (e.g. Boston, London, Tokyo)"
           required
         />
-        <button type="submit">Get Weather</button>
+        <button type="submit" id="submit-btn">
+          <span class="btn-text">Get Weather</span>
+          <span class="spinner hidden">⏳</span>
+        </button>
       </form>
 
-      <div id="result" class="hidden">
-        <h2 id="city-name"></h2>
-        <p><strong>Temperature:</strong> <span id="temp"></span> °C</p>
-        <p><strong>Conditions:</strong> <span id="conditions"></span></p>
-        <p class="source">Data source: <span id="source"></span></p>
+      <div id="loading" class="hidden loading-state">
+        <div class="spinner-large">🌀</div>
+        <p>Fetching weather data...</p>
       </div>
 
-      <p id="error" class="error hidden"></p>
+      <div id="result" class="hidden result-card">
+        <div class="weather-icon" id="weather-icon">☀️</div>
+        <h2 id="city-name"></h2>
+        <div class="temperature-display">
+          <span id="temp" class="temperature"></span>
+          <span class="unit">°C</span>
+        </div>
+        <p class="conditions-text" id="conditions"></p>
+        <div class="metadata">
+          <span class="source-badge" id="source"></span>
+        </div>
+      </div>
+
+      <div id="error" class="error-box hidden">
+        <span class="error-icon">⚠️</span>
+        <p id="error-message"></p>
+      </div>
     </main>
 
     <script src="script.js"></script>
