@@ -4,12 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main>
       <h1>☀️ Weather App</h1>
-      <form id="weather-form">
+
+      <div class="search-options">
+        <button class="option-btn active" data-mode="search">🔍 Search City</button>
+        <button class="option-btn" data-mode="map">🗺️ Pick on Map</button>
+        <button class="option-btn" data-mode="location">📍 My Location</button>
+      </div>
+
+      <form id="weather-form" class="search-mode">
         <input
           type="text"
           id="city-input"
@@ -17,10 +25,16 @@
           required
         />
         <button type="submit" id="submit-btn">
-          <span class="btn-text">Get Weather</span>
+          <span class="btn-text">Get Forecast</span>
           <span class="spinner hidden">⏳</span>
         </button>
       </form>
+
+      <div id="map-container" class="hidden">
+        <p class="map-instruction">Click anywhere on the map to select a location</p>
+        <div id="map"></div>
+        <button id="map-confirm-btn" class="confirm-btn hidden">Get Forecast for Selected Location</button>
+      </div>
 
       <div id="loading" class="hidden loading-state">
         <div class="spinner-large">🌀</div>
@@ -28,13 +42,26 @@
       </div>
 
       <div id="result" class="hidden result-card">
-        <div class="weather-icon" id="weather-icon">☀️</div>
-        <h2 id="city-name"></h2>
-        <div class="temperature-display">
-          <span id="temp" class="temperature"></span>
-          <span class="unit">°C</span>
+        <div class="current-weather">
+          <div class="weather-icon" id="weather-icon">☀️</div>
+          <h2 id="city-name"></h2>
+          <div class="temperature-display">
+            <span id="temp" class="temperature"></span>
+            <span class="unit">°C</span>
+          </div>
+          <p class="conditions-text" id="conditions"></p>
+          <div class="current-details">
+            <span id="feels-like"></span>
+            <span id="humidity"></span>
+            <span id="wind"></span>
+          </div>
         </div>
-        <p class="conditions-text" id="conditions"></p>
+
+        <div id="forecast-container" class="forecast-section hidden">
+          <h3>7-Day Forecast</h3>
+          <div id="forecast-days" class="forecast-grid"></div>
+        </div>
+
         <div class="metadata">
           <span class="source-badge" id="source"></span>
         </div>
@@ -46,6 +73,7 @@
       </div>
     </main>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { getWeatherForCity } from "../services/weatherService.js";
+import {
+  getWeatherForCity,
+  getForecastForLocation,
+} from "../services/weatherService.js";
 
 const router = Router();
 
@@ -21,6 +24,21 @@ router.get("/weather", async (req, res) => {
     res
       .status(500)
       .json({ error: err.message || "Failed to fetch weather data" });
+  }
+});
+
+router.get("/forecast", async (req, res) => {
+  const { location } = req.query;
+  if (!location) {
+    return res.status(400).json({ error: "Location parameter is required" });
+  }
+  try {
+    const forecast = await getForecastForLocation(location);
+    res.json(forecast);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: err.message || "Failed to fetch forecast data" });
   }
 });
 
