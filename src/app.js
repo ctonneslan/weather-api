@@ -8,6 +8,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 export function createApp() {
   const app = express();
 
+  app.use(express.static("public"));
   // Middleware
   app.use(helmet());
   app.use(cors());
